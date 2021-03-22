@@ -1,0 +1,27 @@
+http://github.com/golang/go
+http://github.com/myzhan/boomer
+
+#执行golang
+go mod init +
+go get package
+go run file.go
+
+#Boomer-Windows
+locust --master -f dummy.py    #执行locust-master
+go build -o main.exe main.go  #编译go文件为exe
+./main.exe --max-rps 10000     #连接slave并发
+
+#Boomer-Linux
+locust --master -f dummy.py    #执行locust-master
+go build -o a.out main.go       #编译go文件为exe
+./a.out --max-rps 10000         #连接slave并发
+
+#查看从机CPU
+locust --master -f dummy.py
+go run main.go -cpu-profile cpu.pprof -cpu-profile-duration 30s
+go tool pprof cpu.pprof
+
+#查看从机内存
+locust --master -f dummy.py
+go run main.go -mem-profile mem.pprof -mem-profile-duration 30s
+go tool pprof -alloc_space mem.pprof
